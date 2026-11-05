@@ -7,6 +7,17 @@
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 "Poppins","Segoe UI",Arial,sans-serif}
+.loading-screen{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:var(--bg);opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}
+.loading-screen.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loading-card{width:min(360px,100%);padding:36px 32px;text-align:center;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brand-blue);border-radius:20px;box-shadow:0 16px 48px #15223818}
+.loading-logo{display:block;width:104px;height:76px;margin:0 auto 12px;object-fit:contain}
+.loading-eyebrow{margin:0 0 5px;color:var(--brand-red);font-size:10px;font-weight:700;letter-spacing:.16em}
+.loading-card h1{margin:0;color:var(--brand-blue);font-size:20px}
+.loading-track{height:5px;margin:24px 0 11px;overflow:hidden;border-radius:99px;background:var(--line)}
+.loading-track span{display:block;width:38%;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--brand-red),var(--brand-yellow),var(--brand-blue));animation:loading-progress 1.2s ease-in-out infinite alternate}
+.loading-caption{margin:0;color:var(--muted);font-size:12px}
+@keyframes loading-progress{from{transform:translateX(-15%)}to{transform:translateX(180%)}}
+@media(prefers-reduced-motion:reduce){.loading-screen{transition:none}.loading-track span{animation:none;width:100%}}
 .app{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;padding:18px;max-width:1400px;margin:0 auto}
 @media(max-width:900px){.app{grid-template-columns:1fr}}
 .panel{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brand-blue);border-radius:16px;padding:16px;align-self:start;box-shadow:0 8px 26px #1522380c}

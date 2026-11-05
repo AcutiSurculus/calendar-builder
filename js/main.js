@@ -16,3 +16,12 @@ if(!hasSavedProgress){
 }
 initializeHistory();
 saveProgress();
+const loadingScreen=$("loadingScreen");
+const loadingStartedAt=performance.now();
+const showWorkspace=()=>{
+  requestAnimationFrame(()=>requestAnimationFrame(()=>loadingScreen.classList.add("is-hidden")));
+};
+window.setTimeout(showWorkspace,Math.max(0,2000-(performance.now()-loadingStartedAt)));
+loadingScreen.addEventListener("transitionend",event=>{
+  if(event.target===loadingScreen&&event.propertyName==="opacity")loadingScreen.remove();
+});
