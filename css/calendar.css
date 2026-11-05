@@ -1,0 +1,15 @@
+/* The calendar block itself (this is what gets exported) */
+
+#stage{position:absolute;z-index:2;box-sizing:border-box;padding:.4em;line-height:1.1;cursor:move;touch-action:none;user-select:none;outline:none}
+#stage *{box-sizing:border-box}
+.t{margin:0 0 .5em;font-weight:800;line-height:.95}
+.t span{display:block}
+.t .y{font-size:3.6em}.t .m{font-size:5em;text-transform:uppercase}
+.t.line span{display:inline;font-size:3.4em}.t.line .m{margin-right:.25em}
+.bar{display:grid;grid-template-columns:repeat(7,1fr);border-radius:var(--bar-radius);padding:.6em .3em;margin-bottom:var(--gap-y);font-size:var(--bar-font-size);font-weight:700;text-align:center;letter-spacing:.03em}
+.bar span+span{border-left:1px solid #ffffff4d}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);column-gap:var(--gap-x);row-gap:var(--gap-y)}
+.d{height:var(--box-height);background:var(--cell);border:var(--bw) solid var(--line2);border-radius:var(--rad);padding:.3em .5em;font-weight:800;font-size:var(--num);color:var(--ink);display:flex}
+.d.e{visibility:hidden}
+.d.sun{color:var(--sun)}.d.hol{color:var(--hol)}
+.d.l{justify-content:flex-start;align-items:flex-start}.d.c{justify-content:center;align-items:center}.d.r{justify-content:flex-end;align-items:flex-start}

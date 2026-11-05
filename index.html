@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calendar Layout Builder</title>
+<link rel="icon" type="image/png" href="assets/dmc-favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Poppins:wght@500;600;700&family=Montserrat:wght@500;700;800&family=Playfair+Display:wght@600;700;800&family=Pacifico&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/workspace.css">
+<link rel="stylesheet" href="css/calendar.css">
+</head>
+<body>
+<div class="app">
+  <main class="preview" id="ws">
+    <div class="tb"><label for="zoom">Zoom</label>
+      <select id="zoom"><option value="fit">Fit</option><option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option><option value="1.5">150%</option></select>
+      <span id="info"></span></div>
+    <div class="sizer" id="sizer"><div id="scaler">
+      <div id="paperPreview">
+        <div class="chk" id="chk" data-html2canvas-ignore></div>
+        <img id="templateImagePreview" alt="" aria-hidden="true">
+        <div id="stage" tabindex="0" aria-label="Calendar. Drag or use arrow keys to move."></div>
+        <div id="guides" data-html2canvas-ignore><div id="mg"></div><div class="gl gv" id="gv"></div><div class="gl gh" id="gh"></div></div>
+      </div>
+      <div id="frame" data-html2canvas-ignore>
+        <div class="resize-handle nw" data-corner="nw" title="Drag to resize proportionally; hold Shift for free width and height or Alt to resize from center"></div>
+        <div class="resize-handle ne" data-corner="ne" title="Drag to resize proportionally; hold Shift for free width and height or Alt to resize from center"></div>
+        <div class="resize-handle sw" data-corner="sw" title="Drag to resize proportionally; hold Shift for free width and height or Alt to resize from center"></div>
+        <div class="resize-handle se" data-corner="se" title="Drag to resize proportionally; hold Shift for free width and height or Alt to resize from center"></div>
+        <div class="resize-handle edge-n" data-edge="n" title="Drag to resize height"></div>
+        <div class="resize-handle edge-e" data-edge="e" title="Drag to resize width"></div>
+        <div class="resize-handle edge-s" data-edge="s" title="Drag to resize height"></div>
+        <div class="resize-handle edge-w" data-edge="w" title="Drag to resize width"></div>
+      </div>
+    </div></div>
+  </main>
+
+  <aside class="panel">
+    <div class="panel-heading">
+      <img class="brand-logo" id="brandLogo" src="assets/dmc-logo-light.png" data-light-src="assets/dmc-logo-light.png" data-dark-src="assets/dmc-logo.png" alt="DMC Busa Printers">
+      <button class="ghost mode-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
+    </div>
+    <div class="msg theme-msg" id="themeMsg" role="status" aria-live="polite"></div>
+    <div class="title-row"><h1>Calendar Layout Builder</h1><button class="ghost help-button" id="openTutorial" type="button">How to use</button></div>
+    <p class="sub">Drag the calendar to move it. Drag a corner to resize proportionally; use a middle-edge handle to resize one dimension. Shift unlocks corner proportions, Alt resizes from center. Arrow keys move it (Shift = 10 mm). Use Ctrl/Cmd+Z to undo and Ctrl/Cmd+Y to redo.</p>
+    <button class="ghost slider-toggle" id="toggleSliders" type="button" aria-expanded="false">Show optional sliders</button>
+
+    <div class="months" id="months" role="group" aria-label="Month"></div>
+    <div class="row"><label for="year">Year</label><input type="number" id="year" min="1900" max="2200"></div>
+
+    <fieldset><legend>Template image</legend>
+      <div class="row"><label for="templateImage">Upload image</label><input type="file" id="templateImage" accept="image/*"></div>
+      <button class="ghost" id="removeTemplate" type="button" disabled>Remove template image</button>
+      <div class="msg" id="templateMsg" role="status" aria-live="polite">Image is placed behind the calendar across the full paper.</div>
+    </fieldset>
+
+    <fieldset><legend>Paper &amp; position</legend>
+      <div class="row"><label for="paper">Paper size</label><select id="paper"><option>A5</option><option>A4</option><option>A3</option><option value="Letter">Letter (8.5×11 in)</option><option value="Legal">Legal (8.5×14 in)</option><option value="Tabloid">Tabloid (11×17 in)</option><option value="Custom">Custom</option></select></div>
+      <div id="customRows"><div class="row"><label for="cw" class="length-label" data-label="Paper width">Paper width (mm)</label><input type="number" id="cw" min="50" max="1500" step="1"></div>
+      <div class="row"><label for="ch" class="length-label" data-label="Paper height">Paper height (mm)</label><input type="number" id="ch" min="50" max="1500" step="1"></div></div>
+      <div class="row"><label for="orient">Orientation</label><select id="orient"><option value="portrait">Portrait</option><option value="landscape">Landscape</option></select></div>
+      <div class="row"><label for="x" class="length-label" data-label="Position X">Position X (mm)</label><input type="number" id="x" step="0.5"></div>
+      <div class="row"><label for="y" class="length-label" data-label="Position Y">Position Y (mm)</label><input type="number" id="y" step="0.5"></div>
+      <div class="btns"><button id="cx">Center ↔</button><button id="cy">Center ↕</button><button id="fit">Fit to margins</button></div>
+      <div class="row"><label for="marginInput" class="length-label" data-label="Margin">Margin (mm)</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="margin" min="0" max="40"></span><input type="number" id="marginInput" data-length-key="margin" aria-label="Margin"><span class="unit-suffix" data-unit-key="margin"></span></div></div>
+      <div class="row"><label for="showMargins">Show margins</label><input type="checkbox" id="showMargins"></div>
+      <div class="row"><label for="snap">Snap to center &amp; margins</label><input type="checkbox" id="snap"></div>
+    </fieldset>
+
+    <fieldset><legend>Layout</legend>
+      <div class="row"><label for="weekStart">Week starts on</label><select id="weekStart"><option value="0">Sunday</option><option value="1">Monday</option></select></div>
+      <div class="row"><label for="showTitle">Month &amp; year title</label><input type="checkbox" id="showTitle"></div>
+      <div class="row"><label for="titleLayout">Title style</label><select id="titleLayout"><option value="stack">Year above month</option><option value="line">One line</option></select></div>
+      <div class="row"><label for="titleAlign">Title align</label><select id="titleAlign"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></div>
+      <div class="row"><label for="showBar">Weekday bar</label><input type="checkbox" id="showBar"></div>
+      <div class="row"><label for="labels">Weekday names</label><select id="labels"><option value="short">SUN</option><option value="narrow">S</option><option value="full">SUNDAY</option></select></div>
+      <div class="row"><label for="barFontSizeInput">Weekday font size</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="barFontSize" min="8" max="36" step="1"></span><input type="number" id="barFontSizeInput" aria-label="Weekday font size"></div></div>
+      <div class="row"><label for="barRadiusInput" class="length-label" data-label="Weekday bar radius">Weekday bar radius (mm)</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="barRadius" min="0" max="30" step="0.5"></span><input type="number" id="barRadiusInput" data-length-key="barRadius" aria-label="Weekday bar radius"><span class="unit-suffix" data-unit-key="barRadius"></span></div></div>
+      <div class="row"><label for="numAlign">Date position</label><select id="numAlign"><option value="l">Top left</option><option value="c">Center</option><option value="r">Top right</option></select></div>
+    </fieldset>
+
+    <fieldset><legend>Size &amp; shape</legend>
+      <div class="size-row unit-context-target">
+        <label for="width" class="length-label" data-label="Calendar &amp; box width">Calendar &amp; box width (mm)</label>
+        <div class="size-inputs"><span class="slider-option"><input type="range" id="width" min="40" max="300" step="0.5"></span><input type="number" id="widthInput" data-length-key="width" aria-label="Calendar and box width"><span class="unit-suffix" data-unit-key="width"></span></div>
+      </div>
+      <div class="size-row unit-context-target">
+        <label for="boxHeight" class="length-label" data-label="Date box height">Date box height (mm)</label>
+        <div class="size-inputs"><span class="slider-option"><input type="range" id="boxHeight" min="10" max="60" step="0.5"></span><input type="number" id="boxHeightInput" data-length-key="boxHeight" aria-label="Date box height"><span class="unit-suffix" data-unit-key="boxHeight"></span></div>
+      </div>
+      <div class="row"><label for="gapXInput" class="length-label" data-label="Horizontal gap">Horizontal gap (mm)</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="gapX" min="0" max="12" step="0.1"></span><input type="number" id="gapXInput" data-length-key="gapX" aria-label="Horizontal gap"><span class="unit-suffix" data-unit-key="gapX"></span></div></div>
+      <div class="row"><label for="gapYInput" class="length-label" data-label="Vertical gap">Vertical gap (mm)</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="gapY" min="0" max="12" step="0.1"></span><input type="number" id="gapYInput" data-length-key="gapY" aria-label="Vertical gap"><span class="unit-suffix" data-unit-key="gapY"></span></div></div>
+      <div class="row"><label for="radInput" class="length-label" data-label="Corner radius">Corner radius (mm)</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="rad" min="0" max="12" step="0.1"></span><input type="number" id="radInput" data-length-key="rad" aria-label="Corner radius"><span class="unit-suffix" data-unit-key="rad"></span></div></div>
+      <div class="row"><label for="bwInput" class="length-label" data-label="Border width">Border width (mm)</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="bw" min="0" max="3" step="0.1"></span><input type="number" id="bwInput" data-length-key="bw" aria-label="Border width"><span class="unit-suffix" data-unit-key="bw"></span></div></div>
+      <div class="row"><label for="numInput">Date size</label><div class="measure-inputs"><span class="slider-option"><input type="range" id="num" min="14" max="56"></span><input type="number" id="numInput" aria-label="Date size"></div></div>
+    </fieldset>
+
+    <fieldset><legend>Font &amp; colors</legend>
+      <div class="row"><label for="font">Font</label><select id="font"><option>Baloo 2</option><option>Poppins</option><option>Montserrat</option><option>Oswald</option><option>Playfair Display</option><option>Pacifico</option></select></div>
+      <button class="ghost" id="loadFonts" type="button">Load installed fonts</button>
+      <div class="msg" id="fontMsg" role="status" aria-live="polite">Installed-font access depends on browser support and permission.</div>
+      <div class="row"><label for="primary">Title &amp; bar</label><input type="color" id="primary"></div>
+      <div class="row"><label for="ink">Dates</label><input type="color" id="ink"></div>
+      <div class="row"><label for="sun">Sundays</label><input type="color" id="sun"></div>
+      <div class="row"><label for="hol">Holidays</label><input type="color" id="hol"></div>
+      <div class="row"><label for="cell">Box fill</label><input type="color" id="cell"></div>
+      <div class="row"><label for="line2">Box border</label><input type="color" id="line2"></div>
+      <div class="row"><label for="transparent">Transparent paper</label><input type="checkbox" id="transparent"></div>
+      <div class="row"><label for="bgc">Paper color</label><input type="color" id="bgc"></div>
+    </fieldset>
+
+    <fieldset><legend>Export</legend>
+      <div class="row"><label for="scale">Resolution</label><select id="scale"><option value="1">Screen (96 dpi)</option><option value="1.5625">Good (150 dpi)</option><option value="3.125">Print (300 dpi)</option></select></div>
+      <div class="row"><label for="exportAll">Export</label><select id="exportAll"><option value="single">Selected month</option><option value="all">All 12 months (ZIP)</option></select></div>
+      <div class="row"><label for="exportTitle">Include month &amp; year title</label><input type="checkbox" id="exportTitle" checked></div>
+      <button id="export">Download PNG</button>
+      <button class="ghost" id="reset">Reset layout</button>
+      <div class="msg" id="msg" role="status"></div>
+      <div class="msg" id="saveMsg" role="status" aria-live="polite">Changes are saved in this browser on this device.</div>
+    </fieldset>
+  </aside>
+</div>
+
+<div id="unitMenu" class="unit-menu" role="menu" aria-label="Measurement unit" hidden>
+  <button type="button" role="menuitem" data-unit="mm">Millimeters (mm)</button>
+  <button type="button" role="menuitem" data-unit="cm">Centimeters (cm)</button>
+  <button type="button" role="menuitem" data-unit="in">Inches (in)</button>
+  <button type="button" role="menuitem" data-unit="ft">Feet (ft)</button>
+  <button type="button" role="menuitem" data-unit="px">Pixels (px)</button>
+</div>
+
+<dialog id="tutorialDialog" aria-labelledby="tutorialTitle">
+  <div class="tutorial-heading">
+    <div><p class="tutorial-eyebrow">QUICK GUIDE</p><h2 id="tutorialTitle">Build your calendar layout</h2></div>
+    <button class="ghost tutorial-close" id="closeTutorial" type="button" aria-label="Close tutorial">Close</button>
+  </div>
+  <div class="tutorial-content">
+    <section><h3>Choose a month and year</h3><p>Select a month from the month buttons and enter a year. Click a date on the calendar to toggle its holiday color.</p></section>
+    <section><h3>Place and resize</h3><p>A fresh layout starts centered on the paper. Drag the calendar to move it. Drag a corner to resize proportionally; use a midpoint handle on an edge to resize only that dimension. Hold <kbd>Shift</kbd> on a corner for independent width and height, or <kbd>Alt</kbd> to resize from the center. Enter exact values in the numeric fields; use <strong>Show optional sliders</strong> when you prefer sliders. Right-click a measurement to switch its unit. Arrow keys move the focused calendar; hold <kbd>Shift</kbd> with an arrow key to move 10 mm.</p><p><strong>Center ↔</strong> and <strong>Center ↕</strong> center it on the paper. <strong>Fit to margins</strong> sets its width to the available space.</p></section>
+    <section><h3>Set up the paper</h3><p>Choose paper size and orientation. Right-click any measurement to choose its unit independently; right-click the paper preview to change the paper-dimension display unit. Position X/Y and margin settings control placement and guides. Turn on <strong>Snap to center &amp; margins</strong> to snap while dragging.</p></section>
+    <section><h3>Use a template image</h3><p>Upload an image to preview it across the full paper behind the calendar. It is included in PNG and ZIP exports. Use <strong>Remove template image</strong> to clear it.</p></section>
+    <section><h3>Customize the calendar</h3><p>Layout settings control the title, weekday bar, labels, and date alignment. Size &amp; shape settings adjust calendar width, box height, horizontal/vertical gaps, corners, borders, and date size. Weekday font size and bar radius are independent of the month/year title.</p><p>Choose a font and colors in <strong>Font &amp; colors</strong>. <strong>Load installed fonts</strong> requests permission to list fonts available on your device when the browser supports it.</p></section>
+    <section><h3>Undo, redo, and export</h3><p>Use <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Z</kbd> to undo and <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Y</kbd> to redo. Your progress is automatically saved in this browser on this device. Choose the resolution and whether to export the selected month or all 12 months as a ZIP. The title checkbox controls whether month and year appear in the export.</p></section>
+    <section><h3>Preview and appearance</h3><p>Use the zoom menu to change the preview scale. The <strong>Light mode</strong>/<strong>Dark mode</strong> button changes the app appearance; it does not change calendar colors. <strong>Reset layout</strong> restores the calendar settings and holidays to their defaults.</p></section>
+  </div>
+</dialog>
+
+<script src="js/config.js"></script>
+<script src="js/state.js"></script>
+<script src="js/workspace.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/interaction.js"></script>
+<script src="js/controls.js"></script>
+<script src="js/export.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

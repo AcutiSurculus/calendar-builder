@@ -1,0 +1,67 @@
+/* Tokens, page layout, side panel and form controls */
+:root{--bg:#f1f3f6;--panel:#fff;--text:#20242b;--muted:#626c7a;--line:#d8dde5;--accent:#1b5fa7;--accent-ink:#fff;
+  --brand-red:#d50932;--brand-blue:#1b5fa7;--brand-yellow:#ffca05;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#17191e;--panel:#242831;--text:#f2f4f7;--muted:#b3bbc8;--line:#3b424e;--accent:#70a9e3;--accent-ink:#111820;--brand-blue:#70a9e3}
+:root:not([data-theme="dark"]){color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.4 "Poppins","Segoe UI",Arial,sans-serif}
+.app{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;padding:18px;max-width:1400px;margin:0 auto}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brand-blue);border-radius:16px;padding:16px;align-self:start;box-shadow:0 8px 26px #1522380c}
+.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+.brand-logo{display:block;flex:1;min-width:0;width:100%;height:48px;object-fit:contain;object-position:left center}
+.mode-toggle{flex:0 0 auto;width:auto;padding:7px 10px;margin:0!important;font-size:12px}
+.theme-msg:empty{display:none}
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+h1{font-size:18px;margin:0;color:var(--brand-blue)}.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.help-button{width:auto;flex:0 0 auto;padding:6px 10px;margin:0!important;font-size:12px}
+fieldset{border:0;border-top:1px solid var(--line);margin:12px 0 0;padding:10px 0 0}
+legend{font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-blue);padding:0 6px 0 0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:7px 0;font-size:14px}
+.row input[type=range]{width:150px}
+output{min-width:38px;text-align:right;color:var(--muted);font-size:12px;white-space:nowrap}
+select,input[type=number]{font:inherit;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);max-width:160px}
+input[type=number]{width:96px}
+.size-row{margin:10px 0}
+.size-row>label{display:block;margin-bottom:4px;font-size:13px}
+.size-inputs{display:flex;align-items:center;gap:8px}
+.size-inputs input[type=range]{flex:1;min-width:0;width:auto}
+.size-inputs input[type=number]{width:82px;max-width:82px}
+.measure-inputs{display:flex;align-items:center;gap:7px;min-width:0}
+.measure-inputs input[type=number]{width:82px;max-width:82px}
+.slider-option{display:none;align-items:center;min-width:0}
+.show-sliders .slider-option{display:inline-flex}
+.measure-inputs .slider-option input[type=range]{width:100px}
+.size-inputs .slider-option{flex:1}
+.size-inputs .slider-option input[type=range]{width:100%}
+.slider-toggle{width:auto;margin:0 0 8px!important;padding:5px 9px;font-size:12px}
+.unit-suffix{min-width:22px;color:var(--muted);font-size:12px}
+.unit-menu{position:fixed;z-index:20;min-width:180px;padding:5px;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:0 8px 26px #0003}
+.unit-menu[hidden]{display:none}
+.unit-menu button{display:block;width:100%;padding:7px 10px;border:0;border-radius:6px;background:transparent;color:var(--text);text-align:left;font-size:13px}
+.unit-menu button:hover,.unit-menu button:focus-visible{background:var(--bg);filter:none}
+input[type=color]{width:38px;height:28px;border:1px solid var(--line);border-radius:6px;background:none;padding:2px}
+button{font-weight:600;font-size:14px;font-family:inherit;border-radius:10px;border:1px solid var(--accent);padding:10px 14px;cursor:pointer;background:var(--accent);color:var(--accent-ink);width:100%}
+button.ghost{background:transparent;color:var(--accent);margin-top:8px}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.btns button{flex:1;width:auto;padding:7px 8px;font-size:12px;background:transparent;color:var(--accent)}
+button:hover{filter:brightness(.96)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--brand-yellow);outline-offset:2px}
+.msg{font-size:13px;color:var(--muted);min-height:18px;margin-top:8px}
+.months{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.months button{width:auto;padding:5px 10px;font-size:13px;background:transparent;color:var(--accent)}
+.months button[aria-pressed="true"]{background:var(--brand-red);border-color:var(--brand-red);color:#fff}
+#tutorialDialog{width:min(680px,calc(100vw - 32px));max-width:none;max-height:min(85vh,760px);padding:0;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--text);box-shadow:0 24px 80px #0005}
+#tutorialDialog::backdrop{background:#101820a6;backdrop-filter:blur(3px)}
+.tutorial-heading{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px 24px;background:var(--panel);border-bottom:1px solid var(--line)}
+.tutorial-eyebrow{margin:0 0 3px;color:var(--brand-red);font-size:11px;font-weight:700;letter-spacing:.1em}
+.tutorial-heading h2{margin:0;color:var(--brand-blue);font-size:21px}
+.tutorial-close{width:auto;flex:0 0 auto;padding:7px 12px;margin:0!important}
+.tutorial-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:18px 24px 24px}
+.tutorial-content section{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.tutorial-content h3{margin:0 0 6px;color:var(--brand-blue);font-size:14px}
+.tutorial-content p{margin:0;color:var(--muted);font-size:13px}
+.tutorial-content p+p{margin-top:8px}
+.tutorial-content kbd{padding:1px 5px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--text);font:inherit;font-size:12px}
+@media(max-width:600px){.tutorial-heading{padding:16px}.tutorial-content{grid-template-columns:1fr;padding:14px 16px 18px}}
